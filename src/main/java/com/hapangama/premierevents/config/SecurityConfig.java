@@ -52,12 +52,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("users/**", "/users/register").permitAll()
+                        .requestMatchers("api/users/register").permitAll()
+                        .requestMatchers("api/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
+                        .logoutUrl("/api/auth/logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .logoutSuccessHandler(customLogoutSuccessHandler())
