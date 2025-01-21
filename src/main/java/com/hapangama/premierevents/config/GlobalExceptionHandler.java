@@ -27,6 +27,7 @@ public class GlobalExceptionHandler {
                 errors
         );
 
+        ex.printStackTrace(); //for debugging
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -38,6 +39,7 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
 
+        ex.printStackTrace(); //for debugging
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

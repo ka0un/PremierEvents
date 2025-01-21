@@ -4,6 +4,8 @@ package com.hapangama.premierevents.config;
 import com.hapangama.premierevents.filter.JwtAuthFilter;
 import com.hapangama.premierevents.repository.UserInfoRepository;
 import com.hapangama.premierevents.service.UserInfoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import java.io.IOException;
 
 
 @Configuration
@@ -51,6 +56,12 @@ public class SecurityConfig {
                         .requestMatchers("users/**", "/users/register").permitAll()
                         .anyRequest().authenticated()
                 )
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessHandler(customLogoutSuccessHandler())
+                )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -63,6 +74,19 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public LogoutSuccessHandler customLogoutSuccessHandler() {
+        return new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        org.springframework.security.core.Authentication authentication)
+                    throws IOException {
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write("Logged out successfully");
+            }
+        };
     }
 
     @Bean
