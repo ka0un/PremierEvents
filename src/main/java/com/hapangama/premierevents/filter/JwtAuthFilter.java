@@ -40,7 +40,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            username = jwtService.extractUsername(token);
+            try {
+                username = jwtService.extractUsername(token);
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Invalid Token\"}");
+                return;
+            }
         }
 
 
@@ -48,7 +55,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (userDetails == null) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Token");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Invalid Token\"}");
                 return;
             }
 

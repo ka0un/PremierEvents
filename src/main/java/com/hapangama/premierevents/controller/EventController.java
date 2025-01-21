@@ -2,11 +2,13 @@ package com.hapangama.premierevents.controller;
 
 import com.hapangama.premierevents.entity.Event;
 import com.hapangama.premierevents.service.EventService;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -26,8 +28,13 @@ public class EventController {
 
 
     @PutMapping("/{id}")
-    public Event updateEvent(@PathVariable Long id, @RequestBody Event event) {
-        return eventService.updateEvent(id, event);
+    public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody Event event) {
+        Event event1 = eventService.updateEvent(id, event);
+        if (event1 != null) {
+            return ResponseEntity.ok(event1);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
@@ -76,7 +83,7 @@ public class EventController {
 
 
     @PostMapping("/{id}/register")
-    public void registerForEvent(@PathVariable Long id, @RequestBody String attendeeIdentifier) {
+    public void registerForEvent(@PathVariable Long id, @NotEmpty @RequestBody String attendeeIdentifier) {
         eventService.registerUserForEvent(id, attendeeIdentifier);
     }
 }

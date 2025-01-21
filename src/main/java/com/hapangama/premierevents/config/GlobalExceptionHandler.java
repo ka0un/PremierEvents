@@ -42,4 +42,7 @@ public class GlobalExceptionHandler {
         ex.printStackTrace(); //for debugging
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
+
 }
