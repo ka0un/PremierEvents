@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -36,6 +37,7 @@ public class SecurityConfig {
     private UserInfoRepository repository;
 
     @Bean
+    @Primary
     public UserDetailsService userDetailsService(@Lazy PasswordEncoder encoder) {
         return new UserInfoService(repository, encoder);
     }
@@ -45,9 +47,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/register").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("users/**", "/users/register").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

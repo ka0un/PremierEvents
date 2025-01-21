@@ -25,16 +25,19 @@ public class UserInfoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserInfo> userDetail = repository.findByEmail(username);
-
-
-        return userDetail.map(UserInfoDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        return userDetail.map(UserInfoDetails::new).orElse(null);
     }
 
     public String addUser(UserInfo userInfo) {
 
+        userInfo.setEmail(userInfo.getEmail());
+        userInfo.setName(userInfo.getName());
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         repository.save(userInfo);
         return "User Added Successfully";
+    }
+
+    public UserInfo loadUserInfoByEmail(String email) {
+        return repository.findByEmail(email).orElse(null);
     }
 }

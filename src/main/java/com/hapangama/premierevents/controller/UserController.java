@@ -1,42 +1,30 @@
 package com.hapangama.premierevents.controller;
 
 
-import com.hapangama.premierevents.entity.AuthRequest;
+import com.hapangama.premierevents.dto.ErrorResponseBody;
 import com.hapangama.premierevents.entity.UserInfo;
-import com.hapangama.premierevents.service.JwtService;
 import com.hapangama.premierevents.service.UserInfoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserInfoService service;
 
-    private final JwtService jwtService;
-
-    private final AuthenticationManager authenticationManager;
-
     @PostMapping("/register")
-    public String addNewUser(@RequestBody UserInfo userInfo) {
-        return service.addUser(userInfo);
+    public ResponseEntity<?> addNewUser(@Valid @RequestBody UserInfo userInfo) {
+
+        if (service.loadUserByUsername(userInfo.getEmail()) != null) {
+            return new ResponseEntity<>(new ErrorResponseBody(400, "Bad Request", "User already exists"), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(service.addUser(userInfo), HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-        );
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            throw new UsernameNotFoundException("Invalid user request!");
-        }
-    }
 }
