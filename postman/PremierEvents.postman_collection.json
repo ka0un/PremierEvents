@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "8b1cedc2-2877-41f4-aa52-f6f32005fe95",
+		"name": "PremierEvents",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "36340770"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"kasun@hapangama.com\",\r\n    \"password\" : \"kasun\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "kasun",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "kasun",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Login API\n\nThis API endpoint is used to authenticate and login a user.\n\n#### Request Body\n\n- email (text, required): The email of the user.\n    \n- password (text, required): The password of the user.\n    \n\n#### Response\n\nThe response is in JSON format and has the following schema:\n\n``` json\n{\n    \"email\": \"\",\n    \"token\": \"\"\n}\n\n ```\n\n- email (string): The email of the user.\n    \n- token (string): The authentication token for the user."
+					},
+					"response": []
+				},
+				{
+					"name": "LOGOUT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NDgzOTk4LCJleHAiOjE3Mzc0ODU3OTh9.Zco69cMLm9cQjR-Ra8b2_7lyGbGkfH0W5dPcfriTGNc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "kasun",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "kasun",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### POST /api/auth/logout\n\nThis endpoint is used to log out the user from the system.\n\n#### Request Body\n\n- There is no request body for this endpoint.\n    \n\n#### Response\n\nThe response for this request is a simple message indicating the success of the logout operation.\n\nExample:\n\n``` json\nLogged out successfully\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "REGISTER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"kasun2\",\r\n    \"email\" : \"kasun2@hapangama.com\",\r\n    \"password\" : \"kasun\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"users",
+								"register"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "kasun",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "kasun",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Register User\n\nThis endpoint is used to register a new user.\n\n#### Request Body\n\n- `name`: (text) The name of the user.\n    \n- `email`: (text) The email address of the user.\n    \n- `password`: (text) The password for the user account.\n    \n\n#### Response\n\nUpon successful registration, the server returns a status code of 201 and a response with the content type of text/plain, along with the message \"User Added Successfully\"."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EVENT",
+			"item": [
+				{
+					"name": "GETALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NjAzOTQxLCJleHAiOjE3Mzc2MDU3NDF9.DS7RkF2TDV2y93d4ZlQCn6oHr4PlAsDv1T_XtbZ9F1A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/events?page=0&size=20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"events"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						},
+						"description": "### GET /api/events\n\nThis endpoint retrieves a paginated list of events.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8085/api/events?page=0&size=20`\n    \n- Query Parameters:\n    \n    - page (number, required): Specifies the page number for pagination.\n        \n    - size (number, required): Specifies the number of events to be included per page.\n        \n\n#### Response\n\n- Status: 200 OK\n    \n- Content-Type: application/json\n    \n    The response will contain a JSON object with the following properties:\n    \n    - `content` (array): An array of events, each containing id, name, dateTime, location, description, and attendees.\n        \n    - `pageable` (object): Information about pagination, including pageNumber, pageSize, sort, offset, unpaged, and paged.\n        \n    - `totalPages` (number): The total number of pages available.\n        \n    - `totalElements` (number): The total count of events.\n        \n    - `last` (boolean): Indicates if it's the last page.\n        \n    - `size` (number): The size of the current page.\n        \n    - `number` (number): The current page number.\n        \n    - `sort` (object): Information about sorting, including unsorted, empty, and sorted.\n        \n    - `first` (boolean): Indicates if it's the first page.\n        \n    - `numberOfElements` (number): The count of events on the current page.\n        \n    - `empty` (boolean): Indicates if the content is empty.\n        \n\n``` json\n{\n    \"content\": [\n        {\n            \"id\": 2,\n            \"name\": \"gameshow\",\n            \"dateTime\": null,\n            \"location\": \"colombo\",\n            \"description\": \"testEvent\",\n            \"attendees\": [\n                \"kasun hapangama\",\n                \"lahiru Maduu\"\n            ]\n        }\n    ],\n    \"pageable\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 20,\n        \"sort\": {\n            \"unsorted\": true,\n            \"empty\": true,\n            \"sorted\": false\n        },\n        \"offset\": 0,\n        \"unpaged\": false,\n        \"paged\": true\n    },\n    \"totalPages\": 1,\n    \"totalElements\": 1,\n    \"last\": true,\n    \"size\": 20,\n    \"number\": 0,\n    \"sort\": {\n        \"unsorted\": true,\n        \"empty\": true,\n        \"sorted\": false\n    },\n    \"first\": true,\n    \"numberOfElements\": 1,\n    \"empty\": false\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "GETBYID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NDg5NzQyLCJleHAiOjE3Mzc0OTE1NDJ9.gtDVY3VeiowEpsCjd6ZofzHXm4TJ-mVfsSZo6s6n_kk"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8085/api/events/2",
+						"description": "This endpoint retrieves details of a specific event with the ID \"2\".\n\n### Request\n\n#### Request Body\n\nThis is a GET request and does not require a request body.\n\n### Response\n\n#### 200 OK\n\n- Content-Type: application/json\n    \n\n``` json\n{\n    \"id\": 0,\n    \"name\": \"\",\n    \"dateTime\": null,\n    \"location\": \"\",\n    \"description\": \"\",\n    \"attendees\": [\"\"]\n}\n\n ```\n\nThe response body contains details of the event including its ID, name, date and time, location, description, and a list of attendees."
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NjAzOTQxLCJleHAiOjE3Mzc2MDU3NDF9.DS7RkF2TDV2y93d4ZlQCn6oHr4PlAsDv1T_XtbZ9F1A"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"gameshow\",\r\n  \"dateTime\": \"2023-12-31T23:59:59\",\r\n    \"location\" : \"colombo\",\r\n    \"description\" : \"testEvent\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8085/api/events",
+						"description": "### API Request Description\n\nThis API endpoint allows the client to create a new event by sending a POST request to the specified URL.\n\n### API Response\n\nThe response to the POST request returns a JSON object with the following properties:\n\n- `id` (number): The unique identifier for the created event.\n    \n- `name` (string): The name of the event.\n    \n- `dateTime` (string): The date and time of the event.\n    \n- `location` (string): The location of the event.\n    \n- `description` (string): A description of the event.\n    \n- `attendees` (array): An array of attendees for the event.\n    \n\n### JSON Schema\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"name\": {\n      \"type\": \"string\"\n    },\n    \"dateTime\": {\n      \"type\": \"string\"\n    },\n    \"location\": {\n      \"type\": \"string\"\n    },\n    \"description\": {\n      \"type\": \"string\"\n    },\n    \"attendees\": {\n      \"type\": \"array\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NjAzOTQxLCJleHAiOjE3Mzc2MDU3NDF9.DS7RkF2TDV2y93d4ZlQCn6oHr4PlAsDv1T_XtbZ9F1A"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"gameshow2\",\r\n  \"dateTime\": \"2023-12-31T23:59:59\",\r\n    \"location\" : \"colombo\",\r\n    \"description\" : \"testEvent\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8085/api/events/2",
+						"description": "The API updates an event with the specified ID by sending an HTTP PUT request to the specified URL. The request should include a JSON payload with the updated event details including the following parameters:\n\n### Request Body\n\n- name (string, required): The name of the event.\n    \n- dateTime (string, optional): The date and time of the event.\n    \n- location (string, required): The location of the event.\n    \n- description (string, required): A description of the event.\n    \n\nIn the last call to this request, the following payload was used:\n\n``` json\n{\n  \"name\": \"gameshow2\",\n  \"dateTime\": null,\n  \"location\": \"colombo\",\n  \"description\": \"testEvent\"\n}\n\n ```\n\n### Response\n\nUpon successful execution, the API returns a status of 200 with a Content-Type of application/json. The response body contains the updated event details including the following parameters:\n\n- id (number): The ID of the event.\n    \n- name (string): The name of the event.\n    \n- dateTime (string): The date and time of the event.\n    \n- location (string): The location of the event.\n    \n- description (string): A description of the event.\n    \n- attendees (array of strings): List of attendees for the event."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NDg2MDg4LCJleHAiOjE3Mzc0ODc4ODh9.aY7ZHa6LePyLZqJrhJW3N_pApXQRCV1hSfSCU5UBipo"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"gameshow2\",\r\n    \"dateTime\" : null,\r\n    \"location\" : \"colombo\",\r\n    \"description\" : \"testEvent\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8085/api/events/1"
+					},
+					"response": []
+				},
+				{
+					"name": "GET ATTENDEES",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NDg4NDAzLCJleHAiOjE3Mzc0OTAyMDN9.aHBhnSQRSg8yHQPNpneiSuT8Q4oHvFCom1lEu0hZgF0"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8085/api/events/2/attendees"
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE ATTENDEES",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NDg4NDAzLCJleHAiOjE3Mzc0OTAyMDN9.aHBhnSQRSg8yHQPNpneiSuT8Q4oHvFCom1lEu0hZgF0"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "lahiru Maduu",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8085/api/events/2/register",
+						"description": "This endpoint allows users to register for a specific event by making an HTTP POST request to the specified URL.\n\nThe response of this request can be documented as a JSON schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"error\": {\n            \"type\": \"string\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "SEARCH",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bkBoYXBhbmdhbWEuY29tIiwiaWF0IjoxNzM3NDg4MDU1LCJleHAiOjE3Mzc0ODk4NTV9.3v_l0pXigkLPYODfImiRWwO-n0YDKbNBrNO7DAM3U7A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/events/search?name=ga&location&startDate&endDate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"events",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "ga"
+								},
+								{
+									"key": "location",
+									"value": null
+								},
+								{
+									"key": "startDate",
+									"value": null
+								},
+								{
+									"key": "endDate",
+									"value": null
+								}
+							]
+						},
+						"description": "The endpoint performs an HTTP GET request to search for events based on the provided parameters such as name, location, start date, and end date.\n\n### Response\n\nThe response is in JSON format with the following structure:\n\n``` json\n{\n  \"content\": [],\n  \"pageable\": {\n    \"pageNumber\": 0,\n    \"pageSize\": 0,\n    \"sort\": {\n      \"empty\": true,\n      \"sorted\": true,\n      \"unsorted\": true\n    },\n    \"offset\": 0,\n    \"paged\": true,\n    \"unpaged\": true\n  },\n  \"last\": true,\n  \"totalElements\": 0,\n  \"totalPages\": 0,\n  \"size\": 0,\n  \"number\": 0,\n  \"sort\": {\n    \"empty\": true,\n    \"sorted\": true,\n    \"unsorted\": true\n  },\n  \"first\": true,\n  \"numberOfElements\": 0,\n  \"empty\": true\n}\n\n ```\n\nThis response represents an empty result set for the given search parameters."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
