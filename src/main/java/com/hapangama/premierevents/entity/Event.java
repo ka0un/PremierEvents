@@ -1,6 +1,8 @@
 package com.hapangama.premierevents.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +21,11 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String name;
+    @NotNull
     private LocalDateTime dateTime;
+    @NotEmpty
     private String location;
     @Column(length = 1000)
     private String description;

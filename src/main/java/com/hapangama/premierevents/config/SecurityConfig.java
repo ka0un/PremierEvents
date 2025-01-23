@@ -49,11 +49,37 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        //swagger // -- Swagger UI v2
+        //            "/v2/api-docs",
+        //            "/swagger-resources",
+        //            "/swagger-resources/**",
+        //            "/configuration/ui",
+        //            "/configuration/security",
+        //            "/swagger-ui.html",
+        //            "/webjars/**",
+        //            // -- Swagger UI v3 (OpenAPI)
+        //            "/v3/api-docs/**",
+        //            "/swagger-ui/**"
+
+
+
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("api/users/register").permitAll()
                         .requestMatchers("api/auth/login").permitAll()
+                        //swagger
+                        .requestMatchers("v2/api-docs").permitAll()
+                        .requestMatchers("swagger-resources").permitAll()
+                        .requestMatchers("swagger-resources/**").permitAll()
+                        .requestMatchers("configuration/ui").permitAll()
+                        .requestMatchers("configuration/security").permitAll()
+                        .requestMatchers("swagger-ui.html").permitAll()
+                        .requestMatchers("webjars/**").permitAll()
+                        .requestMatchers("v3/api-docs/**").permitAll()
+                        .requestMatchers("swagger-ui/**").permitAll()
+                        .requestMatchers("swagger-config").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout

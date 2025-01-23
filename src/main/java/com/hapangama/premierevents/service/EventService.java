@@ -48,7 +48,7 @@ public class EventService {
     }
 
     public Page<Event> searchEvents(String name, String location, LocalDateTime start, LocalDateTime end, Pageable pageable) {
-        return eventRepository.findByNameContainingIgnoreCaseOrLocationContainingIgnoreCaseAndDateTimeBetween(
+        return eventRepository.searchEvents(
                 name, location, start, end, pageable
         );
     }

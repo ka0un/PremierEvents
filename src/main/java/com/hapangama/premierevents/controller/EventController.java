@@ -2,6 +2,7 @@ package com.hapangama.premierevents.controller;
 
 import com.hapangama.premierevents.entity.Event;
 import com.hapangama.premierevents.service.EventService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,13 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public Event createEvent(@RequestBody Event event) {
+    public Event createEvent(@Valid @RequestBody Event event) {
         return eventService.createEvent(event);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody Event event) {
+    public ResponseEntity<?> updateEvent(@PathVariable Long id,@Valid @RequestBody Event event) {
         Event event1 = eventService.updateEvent(id, event);
         if (event1 != null) {
             return ResponseEntity.ok(event1);
