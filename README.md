@@ -6,7 +6,7 @@ PremierEvents is a Java-based application that helps manage and organize events.
 ## Getting Started
 
 ### Prerequisites
-- Java 8 or higher must be installed on your system.
+- Java 17 or higher must be installed on your system.
 - Ensure you have downloaded the latest release of the application from the [releases page](https://github.com/ka0un/PremierEvents/releases).
 
 ### Running the Application
