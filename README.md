@@ -21,7 +21,7 @@ PremierEvents is a Java-based application that helps manage and organize events.
 ### Accessing Swagger UI
 Swagger UI is configured to help you test the API endpoints easily. Once the application is running, follow these steps to access Swagger UI:
 1. Open a web browser.
-2. Navigate to `http://localhost:8080/swagger-ui.html`.
+2. Navigate to `http://localhost:8085/swagger-ui.html`.
 3. You will see the Swagger UI interface where you can explore and test the API endpoints.
 
 ### Using Postman Collection
