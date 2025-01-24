@@ -23,8 +23,13 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public Event createEvent(@Valid @RequestBody Event event) {
-        return eventService.createEvent(event);
+    public ResponseEntity<?> createEvent(@Valid @RequestBody Event event) {
+
+        if (event.getDateTime().isBefore(LocalDateTime.now())) {
+            return ResponseEntity.badRequest().body("Event date cannot be in the past");
+        }
+
+        return ResponseEntity.ok(eventService.createEvent(event));
     }
 
 
