@@ -29,6 +29,8 @@ public class Event {
     private String location;
     @Column(length = 1000)
     private String description;
+    @Column(name = "user_id")
+    private Integer userId;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "event_attendees", joinColumns = @JoinColumn(name = "event_id"))

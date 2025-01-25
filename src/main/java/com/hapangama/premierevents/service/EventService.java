@@ -2,7 +2,9 @@ package com.hapangama.premierevents.service;
 
 import com.hapangama.premierevents.entity.Event;
 import com.hapangama.premierevents.repository.EventRepository;
+import com.hapangama.premierevents.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,13 +18,23 @@ import java.util.Optional;
 public class EventService {
 
     private final EventRepository eventRepository;
-
+    private final SecurityUtils securityUtils;
 
     public Event createEvent(Event event) {
+
+        event.setUserId(securityUtils.getUser().getId());
         return eventRepository.save(event);
     }
 
     public Event updateEvent(Long id, Event updatedEvent) {
+
+        Event old = getEventById(id);
+        Integer userid = securityUtils.getUser().getId();
+
+        if (old != null && userid != null && old.getUserId() != userid) {
+            throw new RuntimeException("You are not allowed to update this event");
+        }
+
         Optional<Event> existing = eventRepository.findById(id);
         if (existing.isPresent()) {
             Event event = existing.get();
@@ -36,6 +48,14 @@ public class EventService {
     }
 
     public void deleteEvent(Long id) {
+
+        Event old = getEventById(id);
+        Integer userid = securityUtils.getUser().getId();
+
+        if (old != null && userid != null && old.getUserId() != userid) {
+            throw new RuntimeException("You are not allowed to delete this event");
+        }
+
         eventRepository.deleteById(id);
     }
 
